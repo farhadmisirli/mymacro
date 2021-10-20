@@ -15,11 +15,13 @@ struct User {
 
 
 fn main() {
-    User {
+    let _user = User {
         name: "Farhad".to_string(),
         user_type: 1
     };
 
+
+    println!("{} ----- ", format!("sds {}, {}", _user.name.to_string(), _user.user_type.to_string()));
     falidate();
 
     assert_eq!(2,2);

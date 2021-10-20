@@ -24,7 +24,7 @@ pub fn derive_helper_attr(_item: TokenStream) -> TokenStream {
 #[proc_macro_derive(Falidate, attributes(helper, required, in_array))]
 pub fn falidate(_item: TokenStream) -> TokenStream {
     let source = _item.to_string();
-    // println!("Normalized source code: {}", source);    
+    println!("Normalized source code: {}", _item.to_string());    
     let ast = syn::parse_derive_input(&source).unwrap();
 
 
@@ -33,21 +33,24 @@ pub fn falidate(_item: TokenStream) -> TokenStream {
     
     if let syn::Body::Struct(s) = ast.body {
         
-        let field_names : Vec<_> = s.fields().iter().map(|ref x|
-            // println!("{}", x.vis);
-            x.ident.clone().unwrap()).collect();
+        // let field_names : Vec<_> = s.fields().iter().map(|ref x|
+        //     // println!("{}", x.vis);
+        //     x.ident.clone().unwrap()).collect();
         
         // println!("Syn's AST: {:?}", field_names);
 
-        let mut index = 0;
+        let mut _i = 0;
 
-        while index < s.fields().len() {
+        while _i < s.fields().len() {
+            let _field_name  = &s.fields()[_i].ident.clone().unwrap().to_string();
+            let _val = &s.fields()[_i].attrs[0].value;
             
-            println!("{:?}", &s.fields()[index].ident.clone().unwrap());
+            println!("{:?}", _val);
+            
 
-
-            index += 1;
+            _i += 1;
         }
+
 
 
 
@@ -79,11 +82,9 @@ pub fn falidate(_item: TokenStream) -> TokenStream {
 
 
 
-
-
     let quoted_code = quote!{
         fn falidate() {
-            println!("Hello, {}!", stringify!(#struct_name));
+            println!("-----, {}!", stringify!(#struct_name));
         }
     };
 
